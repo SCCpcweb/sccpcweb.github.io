@@ -1,1 +1,0 @@
-# sccpcweb.github.io
