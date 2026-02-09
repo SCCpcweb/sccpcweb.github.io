@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>2026 Technology Day · Python Turtle</title>
+<style>
+:root{
+  --bg:#2b2f14;
+  --txt:#ffffff;
+  --muted:rgba(255,255,255,.8);
+  --card:rgba(0,0,0,.35);
+  --border:rgba(255,255,255,.25);
+  --accent1:#bbc844;
+  --accent2:#ffd166;
+  --accent3:#2dd4bf;
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0; font-family:Segoe UI, Roboto, Helvetica, Arial, sans-serif; color:var(--txt); background:var(--bg)}
+.hero{position:relative; min-height:20vh; display:grid; place-items:end start}
+/* .hero::before{content:""; position:absolute; inset:0; background:url('ppt_assets/slide01_img03.jpg') center/cover no-repeat;} */
+.hero::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,.1));}
+.hero-inner{position:relative; z-index:1; padding:48px 24px; max-width:1100px; margin:auto; width:100%}
+.badge{display:inline-block; background:rgba(0,0,0,.45); border:1px solid var(--border); border-radius:999px; padding:8px 12px; font-weight:700}
+.title{font-size:clamp(34px,5vw,60px); line-height:1.05; margin:10px 0}
+.subtitle{font-size:clamp(16px,2vw,20px); color:var(--muted); max-width:780px}
+.cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
+.btn{text-decoration:none; color:#000; background:var(--accent1); border-radius:12px; padding:12px 18px; font-weight:800; border:1px solid rgba(0,0,0,.2)}
+.btn.alt{background:transparent; color:var(--txt); border:1px solid var(--border)}
+
+.container{max-width:1100px; margin:auto; padding:24px}
+.links{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0}
+.link-pill{color:var(--txt); text-decoration:none; background:rgba(0,0,0,.35); border:1px solid var(--border); padding:10px 14px; border-radius:999px}
+
+.grid{display:block; margin-top:20px} .grid > *{margin-bottom:20px}
+.card{background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden}
+.card-header{display:flex; align-items:center; gap:12px; padding:12px 14px; background:linear-gradient(90deg, var(--accent1), var(--accent2))}
+.card-header h3{margin:0; font-size:18px; color:#000; text-shadow:0 1px 0 rgba(255,255,255,.4)}
+.card-body{padding:14px}
+.card-body pre{white-space:pre-wrap; word-break:break-word; margin:0; background:rgba(0,0,0,.5); border:1px solid var(--border); border-radius:12px; padding:14px; overflow:auto; max-height:420px; color:#f2f7ff}
+.card-img{width:100%; height:140px; object-fit:cover; border-bottom:1px solid var(--border)}
+.footer{text-align:center; color:var(--muted); margin:36px 0}
+
+
+.examples-vertical { display:block; }
+.example { margin: 28px 0; }
+.example-title { 
+  margin: 0 0 12px; font-size: clamp(22px, 3.2vw, 28px); 
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; color: transparent; 
+}
+.example-img { width:100%; height:200px; object-fit:cover; border-radius:12px; border:1px solid var(--border); margin: 10px 0 12px; }
+.code-wrap { position: relative; }
+.copy-btn { 
+  display:none;
+  position:absolute; right:10px; top:10px; 
+  background: var(--accent2); color:#000; font-weight:700; 
+  border:1px solid rgba(0,0,0,.2); border-radius:10px; padding:6px 10px; cursor:pointer; 
+}
+.copy-btn:active { transform: translateY(1px); }
+/* Ensure code remains scroll-free and wraps */
+.card-body pre, .code-wrap pre { max-height: none; overflow: visible; white-space: pre-wrap; word-break: break-word; }
+
+
+</style>
+</head>
+<body>
+<section aria-label="Title slide background" class="hero">
+<div class="hero-inner">
+<!-- <span class="badge">2026 Technology Day</span> -->
+ <h1 class="title">Southeast Community College CIT</h1>
+<br>
+<h1 class="title">Shell Shapes: Logic in Motion</h1>
+<div class="cta">
+<!-- <a class="btn" href="https://stepindev.com/en/py-playground" rel="noopener" target="_blank">Open Online Turtle Environment</a> -->
+<h3>Open these links in a new tab to begin with starter code:</h3><br>
+<div class="links"><a class="link-pill" href="https://stepindev.com/en/py-playground/share#jZRRbtswDED_C_QORPNRB1iL7gD72xHyPygyLQuTRUOS53qnL0VZieOmQIEggC2-Z1KkdIBTbyPwT0FMKiQMMAYyQQ3QUYAT6t6TI7PAb7VEeHx4fLDDSCFBmkJyCHAA67WbWgTlHFAHqUc4lUVNw6B8GzOWaIBfK_Va1ptjxr0aMMJCE3-uYC_s4JTK03OUiJxjVojoNfZqxOap2J5Ywx7dK2_YlL-vQqCZ47msNU8hch6HzHNtswpt44-57IQDeq6IYKB_KIKVWuPAw2jf0XEhgp-V_vstvgZuBKsiWNOnhjN2uHMw6reO_IqfBIDzAhVq0QTEmpLD7qL7li8DX-sicoxqrTd3c-TljZJbtAZfyhvRTyP394YKysayPbwM08iNbsk_J2iDmq9gS7Pfo45mHs2KvpRhFW77VW2D5rEKnMsUd4Ycy-NQQgBq7M-3t2OZfx7W0WHiqZWVbSnR_sfc61ujJp8COclqtm3q6_Q76xmvsObzExr5_2SQkRVG1quAqTpp5ga_24Q8ZCbQ5NtbS9Tc0IsIjfV_OutcdU3SCy79Kj0jDzxet1VIbkjh7iKqy3fGSpRdWbcxM_Iup5JPn9weojSUqHn_sez3Y3985ADHEbXtrOYZ0CpZ8uJZLxKen3yNfAA" rel="noopener" target="_blank">Basics</a>
+<a class="link-pill" href="https://stepindev.com/en/py-playground/share#jZBLCoMwEIb3gnf4qYvqoqJ23V17gnqBVMcHxEQmkdbbNwkiLl2E8A3zzSvB6yemWRJm1j2LCZ1m1NQMSkvdr3iK1QA31DwK1UuKo3GaNVvYha3HOLJ4bJTX4UszIIESExmsenH1QthVscNoNrqakAEXsIgjuJfA7l08vceWULoGeeOG4fTC1F4yz27Ir-A2LYsisKTOpmXlYRerg_iRC5037wezZyJ1Qt0O0Grl14-jPw" rel="noopener" target="_blank">Triangle</a>
+<a class="link-pill" href="https://stepindev.com/en/py-playground/share#jVK7bsMwDNwD5B-IeKgzNEj6GDp0KNB-QfIDSkTbAmTJpWi47teXYo3WQ4t4EKQj7o7kQQW8fZi28wgdxZpMC1UkOOGlCdHHeoRXMyaAWzi-94ZwvXJtF4mBe2IvcL1ieJ7Q7qRXuQUoIJgWE4yxFzctiwc3Lk3oJikDpMCQbQp4sVYYCIkNY4tBmkS4NCbUqHVDFIdcM1M_SI3pZIbr0ovsQhArBb-jF1kgywyOG3FNuqJOw7sOQ3KfWD5u_21wxtqFmX_lvNf4lPk9WxYfnUU4ZFPllRtCuxFb3gl5MGTLw36v2GPF5VN-_-juZrqz73Gx8H4mrAkxLFY-zJSRcohLpH9GhMGCkaPRzGKZPoyNQb7LFw" rel="noopener" target="_blank">Square</a>
+<a class="link-pill" href="https://stepindev.com/en/py-playground/share#hVLLasMwELwb_A8LOdQ5NLQUeijkYBJTDEla8jgH1ZJjgywZSW7av-9IVorppbqIfczO7Eht12vjyA3GSZEmaeJoGaPFMVzZnPyZkWKdsPStB0Njhe7JNa2N0Z0NHYSEozSZUc456oKsY050QoFFU9UwdREhz4zRV59jkZBsw3qI-B9aaakN6ToEN-0gTZPdaXtelfvVpjjQ8uk5SB_l-1Y1dB8iAKvWVBLrcMOuCsh9vi5PgNDjw8MvKOAM4-1gPcaXsB0DfddL4aAjTEmTfPe6KQJ4ivXoTn9CoQ7sUtTOt3BxMQLc19Y1JFjVTOaU2_xYvu3Oh_eiWGPiOHBGDayqmXXE9e0Roml-A7RBWKiHN1zYXgie_Rk3jx7V8O6LWoXVYGg2sWz-MrELE-O2g3JwTWrdI80chEs58sLh6CRm47jFGGajn54xZP3qkAOXkILA8YNxrfC9fgA" rel="noopener" target="_blank">Spiral</a>
+<!-- <a class="link-pill" href="https://stepindev.com/en/py-playground" rel="noopener" target="_blank">Online Python + Turtle Environment</a> -->
+</div>
+<!-- <a class="btn alt" href="#examples">See Examples</a> -->
+ <br>
+</div>
+</div>
+</section>
+<div class="container">
+
+<main aria-label="Examples" class="" id="examples"><div class="examples-vertical"><section class="example"><h2 class="example-title">Basics</h2><div class="code-wrap"><button class="copy-btn" type="button">Copy code</button><pre><code># This is a starter program for Technology Days 
+import turtle  # include all of the Turtle commands
+
+tom = turtle.Turtle()  # names your Turtle - this Turtle's name is tom 
+tom.shape("turtle")   # changes the arrow to a turtle shape
+
+#tom.forward(n) statement to move the turtle forward n pixels
+#tom.backward(n) statement to move the turtle backward n pixels
+
+#tom.right(angle) statement to turn the turtle to the right by (angle) degrees
+#tom.left(angle)  statement to turn the turtle to the left by (angle) degrees
+#tom.setheading(angle) statement to set the turtle's heading
+
+#tom.penup() statement to raise the pen up - don't draw
+#tom.pendown() statement to lower the pen - start drawing
+
+#tom.circle(radius) statement to draw a circle  .circle(100) is a complete circle
+
+#tom.pensize(n)  statement to control the width of the line
+#tom.pencolor(color)  statement to change the color of the pen
+#tom.bgcolor(color) statement to set the background color of the screen
+#tom.begin_fill(color) use this statement before drawing
+#tom.end_fill() use this statement after drawing to complete filling the shape 
+
+#tom.goto(x,y)  statement to move the turtle to a specific location 
+
+turtle.done()</code></pre></div></section><section class="example"><h2 class="example-title">Triangle</h2><div class="code-wrap"><button class="copy-btn" type="button">Copy code</button><pre><code># Example program for Technology Days  - Triangle
+
+import turtle
+
+t = turtle.Turtle()  # names your Turtle - this Turtle's name is t 
+  
+# triangle
+
+# Side 1
+t.color("red")
+t.forward(100)
+t.left(120)
+
+# Side 2
+t.color("blue")
+t.forward(100)
+t.left(120)
+
+# Side 3
+t.color("green")
+t.forward(100)
+t.left(120)
+
+turtle.done()</code></pre></div></section><section class="example"><h2 class="example-title">Square</h2><div class="code-wrap"><button class="copy-btn" type="button">Copy code</button><pre><code># Example program for Technology Days  - Square
+
+import turtle
+
+t = turtle.Turtle()  # names your Turtle - this Turtle's name is t 
+
+# Add the statement to change the arrow to a turtle shape
+
+# Add the statement to change the color of the turtle
+
+# start with a square 
+
+t.pensize(5)
+
+
+# Add the statement to begin the color fill for the shape
+
+# Side 1
+t.color("red")
+t.forward(100)
+t.left(90)
+
+# Side 2
+t.color("blue")
+t.forward(100)
+t.left(90)
+
+# Side 3
+t.color("green")
+t.forward(100)
+t.left(90)
+
+# Side 4
+t.color("orange")
+t.forward(100)
+t.left(90)
+
+# Add the statement to end and fill the shape
+
+turtle.done()</code></pre></div></section><section class="example"><h2 class="example-title">Spiral</h2><div class="code-wrap"><button class="copy-btn" type="button">Copy code</button><pre><code>import turtle
+
+t = turtle.Turtle()     # names your Turtle - this Turtle's name is t 
+
+# Add the statement to change the arrow to a turtle shape
+# Add the statement to change the color of the turtle
+ 
+NUM_CIRCLES =36         # the number of circles drawn 
+RADIUS = 100            # radius of 100 is a complete circle
+ANGLE = 10              # move to the left 10 degrees with each circle
+ANIMATION_SPEED = 0     # how fast does your turtle draw 0 is fast 
+
+t.speed(ANIMATION_SPEED)
+ 
+for x in range(NUM_CIRCLES):       # this is a counter loop that will draw 36 circles
+    t.circle(RADIUS)
+    t.left(ANGLE)
+
+turtle.done()</code></pre></div></section></div></main>
+<!-- <p class="footer">Tip: Ctrl/Cmd + click a link to open in a new tab.</p> -->
+</div>
+<!-- <script>
+(function(){
+  function copy(text){
+    if(navigator.clipboard && window.isSecureContext){
+      return navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } finally { document.body.removeChild(ta); }
+      return Promise.resolve();
+    }
+  }
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest('.copy-btn');
+    if(!btn) return;
+    const pre = btn.parentElement.querySelector('pre');
+    if(!pre) return;
+    const text = pre.innerText;
+    copy(text).then(()=>{
+      const old = btn.textContent; btn.textContent = 'Copied!';
+      setTimeout(()=>{ btn.textContent = old; }, 1200);
+    }).catch(()=>{
+      btn.textContent = 'Copy failed';
+      setTimeout(()=>{ btn.textContent = 'Copy code'; }, 1500);
+    });
+  });
+})();
+</script> -->
+</body>
+</html>
